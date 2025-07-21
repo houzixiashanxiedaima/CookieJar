@@ -1,3 +1,279 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Apple-style scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Apple system fonts */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth animations */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Apple-style focus rings */
+button:focus,
+input:focus,
+select:focus {
+  outline: none;
+}
+
+/* Subtle backdrop blur effect */
+.backdrop-blur-xl {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Apple-style button hover */
+@keyframes subtle-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.hover-bounce:hover {
+  animation: subtle-bounce 0.3s ease-in-out;
+}
+
+/* Apple-style gradient backgrounds */
+.bg-apple-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-apple-blue {
+  background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+}
+
+/* Glass morphism effect */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Apple-style shadows */
+.apple-shadow-sm {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+}
+
+.apple-shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+}
+
+.apple-shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Force include essential styles that Tailwind might miss */
+.bg-white { background-color: #ffffff; }
+.bg-gray-50 { background-color: #f9fafb; }
+.bg-gray-100 { background-color: #f3f4f6; }
+.bg-gray-200 { background-color: #e5e7eb; }
+.bg-blue-500 { background-color: #3b82f6; }
+.bg-purple-600 { background-color: #9333ea; }
+.bg-cyan-500 { background-color: #06b6d4; }
+.bg-green-500 { background-color: #10b981; }
+.bg-blue-100 { background-color: #dbeafe; }
+
+.text-gray-400 { color: #9ca3af; }
+.text-gray-500 { color: #6b7280; }
+.text-gray-600 { color: #4b5563; }
+.text-gray-700 { color: #374151; }
+.text-gray-900 { color: #111827; }
+.text-blue-500 { color: #3b82f6; }
+.text-blue-900 { color: #1e3a8a; }
+.text-white { color: #ffffff; }
+
+.border-gray-200 { border-color: #e5e7eb; }
+.border-gray-300 { border-color: #d1d5db; }
+
+.rounded-xl { border-radius: 0.75rem; }
+.rounded-2xl { border-radius: 1rem; }
+.rounded-full { border-radius: 9999px; }
+.rounded-lg { border-radius: 0.5rem; }
+.rounded-md { border-radius: 0.375rem; }
+
+.px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+.py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.p-3 { padding: 0.75rem; }
+.p-4 { padding: 1rem; }
+.pl-4 { padding-left: 1rem; }
+.pl-10 { padding-left: 2.5rem; }
+.pr-4 { padding-right: 1rem; }
+.pr-10 { padding-right: 2.5rem; }
+
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mt-1 { margin-top: 0.25rem; }
+
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+
+.space-y-3 > * + * { margin-top: 0.75rem; }
+.space-y-4 > * + * { margin-top: 1rem; }
+
+.h-8 { height: 2rem; }
+.h-9 { height: 2.25rem; }
+.h-10 { height: 2.5rem; }
+.h-16 { height: 4rem; }
+.w-3 { width: 0.75rem; }
+.w-4 { width: 1rem; }
+.w-6 { width: 1.5rem; }
+.w-8 { width: 2rem; }
+.w-9 { width: 2.25rem; }
+.w-16 { width: 4rem; }
+.min-w-0 { min-width: 0px; }
+.max-h-24 { max-height: 6rem; }
+.max-h-28 { max-height: 7rem; }
+
+.text-xs { font-size: 0.75rem; line-height: 1rem; }
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+
+.tracking-tight { letter-spacing: -0.025em; }
+.tracking-wide { letter-spacing: 0.025em; }
+.tracking-wider { letter-spacing: 0.05em; }
+
+.leading-relaxed { line-height: 1.625; }
+
+.shadow-sm { 
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.shadow-md { 
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-lg { 
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.border-gray-200\/60 { border-color: rgba(229, 231, 235, 0.6); }
+.border-gray-200\/80 { border-color: rgba(229, 231, 235, 0.8); }
+.border-gray-300\/80 { border-color: rgba(209, 213, 219, 0.8); }
+
+.bg-white\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+.focus\:ring-2:focus { 
+  --tw-ring-shadow: 0 0 0 2px var(--tw-ring-color);
+  box-shadow: var(--tw-ring-shadow);
+}
+
+.focus\:ring-blue-500\/20:focus { 
+  --tw-ring-color: rgba(59, 130, 246, 0.2);
+}
+
+.focus\:ring-blue-500\/30:focus { 
+  --tw-ring-color: rgba(59, 130, 246, 0.3);
+}
+
+.hover\:bg-gray-100:hover { background-color: #f3f4f6; }
+.hover\:bg-gray-200:hover { background-color: #e5e7eb; }
+.hover\:border-gray-300\/80:hover { border-color: rgba(209, 213, 219, 0.8); }
+.hover\:shadow-md:hover { 
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.active\:scale-95:active { transform: scale(0.95); }
+
+.pb-4 { padding-bottom: 1rem; }
+
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.justify-end { justify-content: flex-end; }
+.justify-start { justify-content: flex-start; }
+
+/* Additional styles for the updated UI */
+.bg-blue-50 { background-color: #eff6ff; }
+.bg-blue-600 { background-color: #2563eb; }
+.bg-blue-700 { background-color: #1d4ed8; }
+.text-blue-600 { color: #2563eb; }
+.text-blue-700 { color: #1d4ed8; }
+.border-blue-200 { border-color: #bfdbfe; }
+.border-blue-500 { border-color: #3b82f6; }
+
+.w-2\.5 { width: 0.625rem; }
+.h-2\.5 { height: 0.625rem; }
+.w-3\.5 { width: 0.875rem; }
+.h-3\.5 { height: 0.875rem; }
+.w-7 { width: 1.75rem; }
+.h-7 { width: 1.75rem; }
+.w-14 { width: 3.5rem; }
+.h-14 { height: 3.5rem; }
+
+.px-2\.5 { padding-left: 0.625rem; padding-right: 0.625rem; }
+.py-0\.5 { padding-top: 0.125rem; padding-bottom: 0.125rem; }
+.p-2\.5 { padding: 0.625rem; }
+.pr-8 { padding-right: 2rem; }
+.mb-1\.5 { margin-bottom: 0.375rem; }
+
+.space-y-2 > * + * { margin-top: 0.5rem; }
+.gap-2 { gap: 0.5rem; }
+
+.max-h-20 { max-height: 5rem; }
+.rounded-lg { border-radius: 0.5rem; }
+
+.hover\:bg-blue-100:hover { background-color: #dbeafe; }
+.hover\:bg-blue-600:hover { background-color: #2563eb; }
+.hover\:text-blue-600:hover { color: #2563eb; }
+.hover\:border-blue-200:hover { border-color: #bfdbfe; }
+.hover\:bg-blue-50\/30:hover { background-color: rgba(239, 246, 255, 0.3); }
+
+.focus\:ring-blue-500\/50:focus { 
+  --tw-ring-color: rgba(59, 130, 246, 0.5);
+}
+
+/* Additional styles for improved search and dropdown */
+.items-stretch { align-items: stretch; }
+.flex-1 { flex: 1 1 0%; }
+.min-w-20 { min-width: 5rem; }
+.h-10 { height: 2.5rem; }
+.border { border-width: 1px; border-style: solid; }
+.border-gray-300 { border-color: #d1d5db; }
+.focus\:border-blue-300:focus { border-color: #93c5fd; }
+.focus\:ring-offset-2:focus { --tw-ring-offset-width: 2px; }
+.placeholder-gray-400::placeholder { color: #9ca3af; }
+.font-semibold { font-weight: 600; }
+.shadow-md { 
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.gap-3 { gap: 0.75rem; }
