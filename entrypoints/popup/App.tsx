@@ -5,31 +5,67 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import './style.css';
 
-// --- Utils ---
+// --- 工具函数 (Utils) ---
+/**
+ * 🎓 学习重点：Tailwind CSS 类名合并工具
+ * - clsx: 条件性类名拼接，支持对象、数组、字符串形式
+ * - twMerge: 自动处理 Tailwind 类冲突，后面的类会覆盖前面的
+ * - 这是 Tailwind 生态中的最佳实践组合
+ */
 function cn(...inputs: any[]) {
   return twMerge(clsx(inputs));
 }
 
-// --- Data Structures ---
+// --- 数据类型定义 (Data Structures) ---
+/**
+ * 🎓 学习重点：TypeScript 接口定义
+ * - interface: 定义对象的结构和类型
+ * - 所有属性都是必需的（没有 ? 可选标记）
+ * - 这样可以确保类型安全，避免运行时错误
+ */
 interface Cookie {
-  name: string;
-  value: string;
-  domain: string;
+  name: string;    // Cookie 名称
+  value: string;   // Cookie 值
+  domain: string;  // Cookie 所属域名
 }
+
+/**
+ * 🎓 学习重点：TypeScript 联合类型 (Union Types)
+ * - 用 | 分隔不同的字面量类型
+ * - 限制变量只能是这三个值之一
+ * - 提供更好的类型安全和 IDE 自动补全
+ */
 type FilterType = 'all' | 'key' | 'value';
 
-// --- Components ---
+// --- 子组件定义 (Components) ---
+/**
+ * 🎓 学习重点：React 函数组件 + TypeScript
+ * 高亮文本组件 - 在搜索结果中突出显示匹配的文本
+ * 
+ * Props 类型定义：
+ * - text: 要高亮的原始文本
+ * - query: 搜索查询词
+ * 
+ * React.FC<Props> 是函数组件的 TypeScript 类型定义
+ */
 const Highlight: React.FC<{ text: string; query: string }> = ({ text, query }) => {
+  // 📖 早期返回模式：如果没有搜索词，直接返回原文本
   if (!query) return <>{text}</>;
+  
+  // 📖 正则表达式：全局不区分大小写搜索，并捕获匹配组
   const parts = text.split(new RegExp(`(${query})`, 'gi'));
+  
   return (
     <>
+      {/* 📖 数组映射：将文本片段渲染为 JSX */}
       {parts.map((part, i) =>
         part.toLowerCase() === query.toLowerCase() ? (
+          // 🎨 匹配的文本：蓝色高亮样式
           <span key={i} className="bg-blue-100 text-blue-900 px-1 py-0.5 rounded-md font-medium">
             {part}
           </span>
         ) : (
+          // 📝 普通文本：不做特殊处理
           part
         )
       )}
@@ -37,12 +73,57 @@ const Highlight: React.FC<{ text: string; query: string }> = ({ text, query }) =
   );
 };
 
+/**
+ * 🎓 学习重点：React 主组件定义
+ * 这是应用的根组件，包含所有的状态管理和业务逻辑
+ */
 const App: React.FC = () => {
+  // --- 状态管理 (State Management) ---
+  
+  /**
+   * 🎓 学习重点：useState Hook 状态管理
+   * 
+   * allCookies: 存储所有 cookie 数据的数组
+   * - 泛型 <Cookie[]> 指定数组元素类型
+   * - 初始值为空数组 []
+   */
   const [allCookies, setAllCookies] = useState<Cookie[]>([]);
+  
+  /**
+   * 🎓 学习重点：布尔状态管理
+   * loading: 控制加载状态的显示
+   * - 初始值 true，数据加载完成后设为 false
+   */
   const [loading, setLoading] = useState(true);
+  
+  /**
+   * 🎓 学习重点：字符串状态管理  
+   * searchQuery: 存储用户输入的搜索关键词
+   * - 与搜索输入框双向绑定
+   */
   const [searchQuery, setSearchQuery] = useState('');
+  
+  /**
+   * 🎓 学习重点：联合类型状态管理
+   * filterType: 当前选择的筛选类型
+   * - 类型为 FilterType，限制只能是 'all' | 'key' | 'value'
+   * - 默认值 'all' 显示所有结果
+   */
   const [filterType, setFilterType] = useState<FilterType>('all');
+  
+  /**
+   * 🎓 学习重点：复杂对象状态管理
+   * copiedStates: 追踪复制按钮的状态
+   * - Record<string, boolean> 类型表示键为字符串，值为布尔值的对象
+   * - 用于显示复制成功的临时状态
+   */
   const [copiedStates, setCopiedStates] = useState<Record<string, boolean>>({});
+  
+  /**
+   * 🎓 学习重点：版本信息状态
+   * extensionVersion: 存储扩展程序版本号
+   * - 通过浏览器 API 获取 manifest.json 中的版本信息
+   */
   const [extensionVersion, setExtensionVersion] = useState('');
 
   useEffect(() => {
