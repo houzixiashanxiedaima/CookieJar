@@ -185,9 +185,9 @@ const App: React.FC = () => {
           <span className="text-xs text-gray-500 font-medium bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full border border-blue-200">v{extensionVersion}</span>
         </div>
         {/* 搜索栏和筛选器容器 */}
-        <div className="flex items-stretch gap-3">
+        <div className="flex items-center gap-3">
           {/* 搜索输入框容器 */}
-          <div className="relative flex-1">
+          <div className="relative flex-[3]">
             {/* 搜索图标 - 绝对定位在输入框左侧 */}
             <div className="absolute left-3 top-1/2 -translate-y-1/2">
               <Search className="w-4 h-4 text-gray-400" />
@@ -208,12 +208,12 @@ const App: React.FC = () => {
               placeholder="Search cookies..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full h-10 pl-10 pr-4 text-sm bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 transition-all duration-200 placeholder-gray-400 shadow-sm"
+              className="w-full h-10 pl-10 pr-10 text-sm bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 transition-all duration-200 placeholder-gray-400 shadow-sm"
             />
           </div>
           
           {/* 筛选下拉框容器 */}
-          <div className="relative">
+          <div className="relative flex-[1]">
             {/* 筛选下拉选择器
                 - appearance-none: 移除默认下拉箭头
                 - h-10: 与搜索框同高度 40px
@@ -231,14 +231,14 @@ const App: React.FC = () => {
             <select
               value={filterType}
               onChange={e => setFilterType(e.target.value as FilterType)}
-              className="appearance-none cursor-pointer h-10 text-sm bg-blue-500 text-white font-semibold pl-4 pr-10 border-0 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:ring-offset-2 transition-all duration-200 shadow-md min-w-20"
+              className="appearance-none cursor-pointer h-10 text-sm bg-white text-gray-700 font-medium pl-4 pr-10 border border-gray-200 rounded-xl hover:border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-300 transition-all duration-200 shadow-sm min-w-20"
             >
               <option value="all">All</option>
               <option value="key">Key</option>
               <option value="value">Value</option>
             </select>
             {/* 自定义下拉箭头 - 绝对定位在右侧 */}
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
           </div>
         </div>
       </header>
