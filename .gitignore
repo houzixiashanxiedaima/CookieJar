@@ -25,7 +25,7 @@ coverage
 # nyc test coverage
 .nyc_output
 
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-temporary-files)
+# Grunt intermediate storage (https://grunt.com/creating-plugins#storing-temporary-files)
 .grunt
 
 # Bower dependency directory (https://bower.io/)
@@ -107,3 +107,23 @@ dist
 
 # PNPM
 pnpm-lock.yaml
+
+# Editor directories and files
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Build artifacts
+dist/
+build/
+
+# Environment variables
+.env.local
+.env.*.local
