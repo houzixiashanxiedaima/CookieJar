@@ -1,8 +1,406 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* 
+  Tailwind CSS 指令 
+  - @tailwind base: 注入 Tailwind 的基础样式 (重置样式)。
+  - @tailwind components: 注入 Tailwind 的组件类。
+  - @tailwind utilities: 注入 Tailwind 的功能类。
+*/
+/* 重置和基础样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/* Apple-style scrollbar */
+/* 主容器样式 - 纯Apple风格 */
+.app-container {
+  display: flex;
+  height: 520px;
+  width: 400px;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+  color: #1d1d1f;
+  font-size: 14px;
+  position: relative;
+}
+
+/* Cookie图标 - 简洁风格 */
+.cookie-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  height: 36px;
+  width: 36px;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  z-index: 10;
+}
+
+/* 版本号 - Apple风格 */
+.version-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border-radius: 14px;
+  background: rgba(142, 142, 147, 0.12);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #8e8e93;
+  z-index: 10;
+}
+
+/* Header 样式 - Apple风格 */
+.app-header {
+  background: #ffffff;
+  padding: 28px 20px 20px 20px;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.header-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  color: #1d1d1f;
+  margin-top: 8px;
+}
+
+/* 搜索区域样式 - Apple风格 */
+.search-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  color: #8e8e93;
+  pointer-events: none;
+}
+
+.search-input {
+  height: 40px;
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #f2f2f7;
+  padding-left: 40px;
+  padding-right: 16px;
+  font-size: 16px;
+  color: #1d1d1f;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  -webkit-appearance: none;
+}
+
+.search-input::placeholder {
+  color: #8e8e93;
+  font-size: 16px;
+}
+
+.search-input:focus {
+  border-color: #007AFF;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+}
+
+/* 过滤器样式 - Apple风格分段控制（更紧凑） */
+.filter-container {
+  display: flex;
+  align-items: stretch;
+  border-radius: 16px;
+  background: #007AFF;
+  padding: 2px;
+  overflow: hidden;
+}
+
+.filter-button {
+  border-radius: 14px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
+              color 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  white-space: nowrap;
+  min-width: 44px;
+}
+
+.filter-button.active {
+  background: #E0E0DE;
+  color: #333;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.filter-button:not(.active) {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.filter-button:not(.active):hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* 主内容区域 - Apple风格 */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px 20px 20px;
+  background: #f2f2f7;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #8e8e93;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  color: #8e8e93;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+/* 空状态 */
+.empty-container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  color: #8e8e93;
+}
+
+.empty-icon-container {
+  display: flex;
+  height: 64px;
+  width: 64px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background: rgba(142, 142, 147, 0.12);
+}
+
+.empty-icon {
+  width: 28px;
+  height: 28px;
+  color: #8e8e93;
+}
+
+.empty-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.empty-subtitle {
+  font-size: 15px;
+  color: #8e8e93;
+}
+
+/* Cookie 统计信息 - Apple风格 */
+.cookie-stats {
+  margin-bottom: 16px;
+  padding-left: 4px;
+  font-size: 13px;
+  color: #8e8e93;
+  font-weight: 400;
+}
+
+.stats-count {
+  font-weight: 500;
+}
+
+.stats-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: right;
+}
+
+.search-query, .filter-info {
+  color: #8e8e93;
+}
+
+/* Cookie 列表 - 平铺布局 */
+.cookie-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-bottom: 20px;
+}
+
+/* Cookie 卡片 - 圆角风格 */
+.cookie-card {
+  border-radius: 24px;
+  background: #ffffff;
+  border: none;
+  margin-bottom: 8px;
+  padding: 16px 20px;
+  transition: background-color 0.15s ease;
+  box-shadow: none;
+}
+
+.cookie-card:last-child {
+  margin-bottom: 0;
+}
+
+.cookie-card:hover {
+  background-color: #E0E0DE;
+}
+
+.cookie-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.cookie-domain {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.cookie-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.locale-tag {
+  background: #007AFF;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.copy-button {
+  display: flex;
+  height: 28px;
+  width: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: #666;
+  background: #f8f9fa;
+  box-shadow: none;
+}
+
+.copy-button:hover {
+  background: #E0E0DE;
+  border-color: #ccc;
+}
+
+.copy-button.copied {
+  background: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+}
+
+/* Cookie 内容 - 上下布局 */
+.cookie-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cookie-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.field-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #999;
+}
+
+.field-value {
+  font-size: 13px;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.field-value.key {
+  font-weight: 500;
+  color: #000;
+}
+
+.field-value.value {
+  font-weight: 400;
+  color: #666;
+}
+
+/* 高亮搜索结果 - Apple风格 */
+.highlight {
+  border-radius: 6px;
+  background: rgba(0, 122, 255, 0.15);
+  padding: 2px 6px;
+  color: #007AFF;
+  font-weight: 600;
+}
+
+/* 自定义滚动条样式 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -28,32 +426,57 @@
   background: transparent;
 }
 
-/* Apple system fonts */
+/* 
+  全局字体设置
+  - 优先使用 Apple 平台的系统字体，提供更原生的观感。
+  - 开启字体平滑，使文本更清晰。
+*/
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: transparent;
 }
 
-/* Smooth animations */
+/* 
+  全局平滑过渡效果
+  - 为所有元素的过渡效果设置一个统一的缓动函数。
+*/
 * {
   transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-/* Apple-style focus rings */
+/* 
+  重置元素的焦点轮廓 (Focus Ring)
+  - 移除浏览器默认的焦点轮廓，因为组件内部使用了自定义的焦点样式。
+*/
 button:focus,
 input:focus,
 select:focus {
   outline: none;
 }
 
-/* Subtle backdrop blur effect */
+/* 
+  背景模糊效果
+  - 定义一个可复用的毛玻璃/背景模糊效果。
+*/
 .backdrop-blur-xl {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
 
-/* Apple-style button hover */
+/* 
+  以下是大量自定义的、模仿 Apple 设计风格或提供特定视觉效果的类。
+  在 Tailwind CSS 中，通常建议通过 `tailwind.config.js` 来扩展主题（theme），而不是在 CSS 文件中定义大量具象的类。
+  这样做可以更好地利用 Tailwind 的功能类和变体（如 hover:, focus:）。
+
+  [潜在问题]：
+  - 维护性：当需要调整设计系统（如阴影、颜色）时，需要在多个地方修改 CSS，而不是在一个配置文件中修改。
+  - 冗余：下面的许多类（如 .bg-white, .px-2, .text-xs 等）都是 Tailwind 默认提供的。在这里显式声明它们可能是为了确保这些类在最终的 CSS 文件中不被清除（Purge），但通常有更好的方法来配置 `purge`/`content` 选项。
+  - 命名冲突：可能会与 Tailwind 未来的版本或插件产生命名冲突。
+*/
+
+/* 悬停时的微妙弹跳动画 */
 @keyframes subtle-bounce {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
@@ -63,7 +486,7 @@ select:focus {
   animation: subtle-bounce 0.3s ease-in-out;
 }
 
-/* Apple-style gradient backgrounds */
+/* 渐变背景 */
 .bg-apple-gradient {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
@@ -72,7 +495,7 @@ select:focus {
   background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
 }
 
-/* Glass morphism effect */
+/* 玻璃拟态效果 */
 .glass-effect {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
@@ -80,7 +503,7 @@ select:focus {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Apple-style shadows */
+/* 阴影效果 */
 .apple-shadow-sm {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
 }
@@ -93,7 +516,18 @@ select:focus {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
 }
 
-/* Force include essential styles that Tailwind might miss */
+/* 
+  [冗余/强制包含部分]
+  下面的类定义了许多 Tailwind 已有的功能类。
+  这通常是为了防止 Tailwind 的 PurgeCSS/Tree-shaking 过程移除这些在 JS/TSX 文件中动态拼接或未直接使用的类。
+  一个更好的做法是配置 `tailwind.config.ts` 中的 `content` 字段，确保它能扫描到所有使用这些类的文件。
+  如果这些类确实是动态生成的，可以考虑使用 `safelist` 选项。
+  
+  由于这些类大部分是 Tailwind 的标准功能类，为了简洁，我将注释掉这部分，以减少 CSS 文件的体积和复杂性。
+  如果移除后出现样式问题，请检查 `tailwind.config.ts` 的 `content` 设置，或在 `safelist` 中添加必要的类。
+*/
+
+/*
 .bg-white { background-color: #ffffff; }
 .bg-gray-50 { background-color: #f9fafb; }
 .bg-gray-100 { background-color: #f3f4f6; }
@@ -222,7 +656,6 @@ select:focus {
 .justify-end { justify-content: flex-end; }
 .justify-start { justify-content: flex-start; }
 
-/* Additional styles for the updated UI */
 .bg-blue-50 { background-color: #eff6ff; }
 .bg-blue-600 { background-color: #2563eb; }
 .bg-blue-700 { background-color: #1d4ed8; }
@@ -262,7 +695,6 @@ select:focus {
   --tw-ring-color: rgba(59, 130, 246, 0.5);
 }
 
-/* Additional styles for improved search and dropdown */
 .items-stretch { align-items: stretch; }
 .flex-1 { flex: 1 1 0%; }
 .min-w-20 { min-width: 5rem; }
@@ -277,3 +709,4 @@ select:focus {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .gap-3 { gap: 0.75rem; }
+*/
