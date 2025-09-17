@@ -14,13 +14,7 @@ interface Cookie {
   domain: string;
 }
 
-type FilterType = "all" | "key" | "value";
-
-const filterOptions: Array<{ value: FilterType; label: string }> = [
-  { value: "all", label: "All" },
-  { value: "key", label: "Key" },
-  { value: "value", label: "Value" },
-];
+// 移除 FilterType，简化为统一搜索
 
 const ESCAPE_PATTERN = /[-\/^$*+?.()|[\\]{}]/g;
 
@@ -57,8 +51,6 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   // 存储用户输入的搜索关键词
   const [searchQuery, setSearchQuery] = useState("");
-  // 存储当前的筛选类型 ('all', 'key', 'value')
-  const [filterType, setFilterType] = useState<FilterType>("all");
   // 跟踪哪些 cookie 的值已被复制，用于显示 "Copied" 状态
   const [copiedStates, setCopiedStates] = useState<Record<string, boolean>>({});
   // 存储扩展的版本号
@@ -113,7 +105,7 @@ const App: React.FC = () => {
   }, []);
 
   // --- 派生状态与计算 (Derived State & Memoization) ---
-  // 使用 useMemo 记忆化筛选结果，避免在每次渲染时都重新计算
+  // 使用 useMemo 记忆化筛选结果，统一全域搜索
   const filteredCookies = useMemo(() => {
     if (!searchQuery) return allCookies;
     const lowercasedQuery = searchQuery.toLowerCase();
@@ -121,30 +113,40 @@ const App: React.FC = () => {
     return allCookies.filter((cookie) => {
       const name = cookie.name.toLowerCase();
       const value = cookie.value.toLowerCase();
+      const domain = cookie.domain.toLowerCase();
 
-      if (filterType === "key") {
-        return name.includes(lowercasedQuery);
-      }
-
-      if (filterType === "value") {
-        return value.includes(lowercasedQuery);
-      }
-
-      return name.includes(lowercasedQuery) || value.includes(lowercasedQuery);
+      // 统一搜索：同时匹配 Key、Value、Domain
+      return name.includes(lowercasedQuery) ||
+             value.includes(lowercasedQuery) ||
+             domain.includes(lowercasedQuery);
     });
-  }, [allCookies, filterType, searchQuery]);
+  }, [allCookies, searchQuery]);
 
   // --- 事件处理 (Event Handlers) ---
   /**
-   * 处理复制操作的函数。
-   * @param {string} text - 要复制到剪贴板的文本。
-   * @param {string} id - 唯一标识符，用于更新复制状态。
+   * 处理复制 Key 的函数
+   * @param {string} key - Cookie 的 Key
+   * @param {string} id - 唯一标识符
    */
-  const handleCopy = (text: string, id: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopiedStates((prev) => ({ ...prev, [id]: true }));
+  const handleCopyKey = (key: string, id: string) => {
+    navigator.clipboard.writeText(key).then(() => {
+      setCopiedStates((prev) => ({ ...prev, [`${id}-key`]: true }));
       setTimeout(() => {
-        setCopiedStates((prev) => ({ ...prev, [id]: false }));
+        setCopiedStates((prev) => ({ ...prev, [`${id}-key`]: false }));
+      }, 2000);
+    });
+  };
+
+  /**
+   * 处理复制 Value 的函数
+   * @param {string} value - Cookie 的 Value
+   * @param {string} id - 唯一标识符
+   */
+  const handleCopyValue = (value: string, id: string) => {
+    navigator.clipboard.writeText(value).then(() => {
+      setCopiedStates((prev) => ({ ...prev, [`${id}-value`]: true }));
+      setTimeout(() => {
+        setCopiedStates((prev) => ({ ...prev, [`${id}-value`]: false }));
       }, 2000);
     });
   };
@@ -155,11 +157,9 @@ const App: React.FC = () => {
   // --- 渲染逻辑 (Render Logic) ---
   return (
     <div className="app-container">
-      {/* Cookie图标 - 绝对定位 */}
-      <div className="cookie-icon">
-        <span role="img" aria-label="Cookie">
-          🍪
-        </span>
+      {/* 专业 Logo - 绝对定位 */}
+      <div className="app-logo">
+        <span className="logo-text">CJ</span>
       </div>
 
       {/* 版本号 - 绝对定位 */}
@@ -180,23 +180,11 @@ const App: React.FC = () => {
             />
             <input
               type="text"
-              placeholder="Search cookies"
+              placeholder="Search cookies..."
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               className="search-input"
             />
-          </div>
-          <div className="filter-container">
-            {filterOptions.map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                onClick={() => setFilterType(option.value)}
-                className={`filter-button ${filterType === option.value ? 'active' : ''}`}
-              >
-                {option.label}
-              </button>
-            ))}
           </div>
         </div>
       </header>
@@ -223,64 +211,63 @@ const App: React.FC = () => {
           <>
             <div className="cookie-stats">
               <span className="stats-count">
-                {shownCookies} cookies matched
+                {shownCookies} cookies {searchQuery ? 'matched' : 'found'}
               </span>
-              <div className="stats-info">
-                {searchQuery && (
+              {searchQuery && (
+                <div className="stats-info">
                   <span className="search-query" title={searchQuery}>
                     Search "{searchQuery}"
                   </span>
-                )}
-                {filterType !== "all" && <span className="filter-info">Filter: {filterType}</span>}
-              </div>
+                </div>
+              )}
             </div>
 
             <div className="cookie-list">
               {filteredCookies.map((cookie, index) => {
                 const cookieId = `cookie-${index}`;
-                const isCopied = copiedStates[cookieId];
+                const isKeyCopied = copiedStates[`${cookieId}-key`];
+                const isValueCopied = copiedStates[`${cookieId}-value`];
 
                 return (
                   <article
                     key={cookieId}
                     className="cookie-card"
                   >
-                    <div className="cookie-header">
-                      <div className="cookie-domain">
-                        <Highlight text={cookie.domain} query={searchQuery} />
-                      </div>
-                      <div className="cookie-actions">
-                        {cookie.name === "_locale" && (
-                          <span className="locale-tag">
-                            zh
-                          </span>
-                        )}
-                        <button
-                          type="button"
-                          onClick={() => handleCopy(cookie.value, cookieId)}
-                          className={`copy-button ${isCopied ? 'copied' : ''}`}
-                          aria-label="Copy cookie value"
-                        >
-                          {isCopied ? "✓" : "copy"}
-                        </button>
-                      </div>
+                    {/* 单元一：Key + 操作 */}
+                    <div className="key-unit">
+                      <span className="key-name">
+                        <Highlight text={cookie.name} query={searchQuery} />
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleCopyKey(cookie.name, cookieId)}
+                        className={`copy-button key-copy ${isKeyCopied ? 'copied' : ''}`}
+                        aria-label="Copy cookie key"
+                      >
+                        {isKeyCopied ? "✓" : "📋 Copy"}
+                      </button>
                     </div>
 
-                    <div className="cookie-content">
-                      <div className="cookie-field">
-                        <span className="field-label">KEY</span>
-                        <span className="field-value key">
-                          <Highlight text={cookie.name} query={searchQuery} />
-                        </span>
+                    {/* Domain 行：辅助信息 */}
+                    <div className="domain-unit">
+                      <span className="domain">
+                        <Highlight text={cookie.domain} query={searchQuery} />
+                      </span>
+                    </div>
+
+                    {/* 单元二：Value + 操作 */}
+                    <div className="value-unit">
+                      <div className="value-box">
+                        <Highlight text={cookie.value} query={searchQuery} />
                       </div>
-                      {filterType === "value" || filterType === "all" ? (
-                        <div className="cookie-field">
-                          <span className="field-label">VALUE</span>
-                          <span className="field-value value">
-                            <Highlight text={cookie.value.length > 50 ? cookie.value.substring(0, 50) + "..." : cookie.value} query={searchQuery} />
-                          </span>
-                        </div>
-                      ) : null}
+                      <button
+                        type="button"
+                        onClick={() => handleCopyValue(cookie.value, cookieId)}
+                        className={`copy-button value-copy ${isValueCopied ? 'copied' : ''}`}
+                        aria-label="Copy cookie value"
+                      >
+                        {isValueCopied ? "✓" : "📋 Copy"}
+                      </button>
                     </div>
                   </article>
                 );

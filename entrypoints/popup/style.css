@@ -25,8 +25,8 @@
   position: relative;
 }
 
-/* Cookie图标 - 简洁风格 */
-.cookie-icon {
+/* 专业 Logo - 简洁风格 */
+.app-logo {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -35,22 +35,32 @@
   width: 36px;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+  border-radius: 8px;
   z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
 }
 
-/* 版本号 - Apple风格 */
+.logo-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+/* 版本号 - 方案A：标题右下角 */
 .version-badge {
   position: absolute;
-  top: 20px;
+  top: 58px;
   right: 20px;
-  border-radius: 14px;
-  background: rgba(142, 142, 147, 0.12);
-  padding: 6px 12px;
-  font-size: 11px;
-  font-weight: 500;
+  border-radius: 4px;
+  background: rgba(142, 142, 147, 0.06);
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 400;
   color: #8e8e93;
   z-index: 10;
+  line-height: 1.2;
 }
 
 /* Header 样式 - Apple风格 */
@@ -76,13 +86,12 @@
 /* 搜索区域样式 - Apple风格 */
 .search-container {
   display: flex;
-  gap: 12px;
   align-items: center;
 }
 
 .search-input-wrapper {
   position: relative;
-  flex: 1;
+  width: 100%;
 }
 
 .search-icon {
@@ -122,46 +131,6 @@
   box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
 }
 
-/* 过滤器样式 - Apple风格分段控制（更紧凑） */
-.filter-container {
-  display: flex;
-  align-items: stretch;
-  border-radius: 16px;
-  background: #007AFF;
-  padding: 2px;
-  overflow: hidden;
-}
-
-.filter-button {
-  border-radius: 14px;
-  padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
-              color 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
-              box-shadow 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-  white-space: nowrap;
-  min-width: 44px;
-}
-
-.filter-button.active {
-  background: #E0E0DE;
-  color: #333;
-  font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-
-.filter-button:not(.active) {
-  background: transparent;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 600;
-}
-
-.filter-button:not(.active):hover {
-  background: rgba(255, 255, 255, 0.15);
-}
 
 /* 主内容区域 - Apple风格 */
 .main-content {
@@ -238,28 +207,35 @@
   color: #8e8e93;
 }
 
-/* Cookie 统计信息 - Apple风格 */
+/* Cookie 统计信息 - 与列表紧密关联 */
 .cookie-stats {
-  margin-bottom: 16px;
-  padding-left: 4px;
+  margin-bottom: 12px;
+  padding: 0 4px 8px 4px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   font-size: 13px;
   color: #8e8e93;
   font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .stats-count {
   font-weight: 500;
+  color: #1d1d1f;
+  font-size: 14px;
 }
 
 .stats-info {
   display: flex;
   align-items: center;
-  gap: 12px;
-  text-align: right;
+  gap: 8px;
 }
 
-.search-query, .filter-info {
-  color: #8e8e93;
+.search-query {
+  color: #007AFF;
+  font-weight: 500;
+  font-size: 12px;
 }
 
 /* Cookie 列表 - 平铺布局 */
@@ -270,15 +246,15 @@
   padding-bottom: 20px;
 }
 
-/* Cookie 卡片 - 圆角风格 */
+/* Cookie 卡片 - 方案B布局结构 */
 .cookie-card {
-  border-radius: 24px;
+  border-radius: 16px;
   background: #ffffff;
-  border: none;
-  margin-bottom: 8px;
-  padding: 16px 20px;
-  transition: background-color 0.15s ease;
-  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 16px;
+  padding: 20px;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .cookie-card:last-child {
@@ -286,64 +262,105 @@
 }
 
 .cookie-card:hover {
-  background-color: #E0E0DE;
+  background-color: #fafafa;
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.cookie-header {
+/* 单元一：Key + 操作 - 垂直居中对齐 */
+.key-unit {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  min-height: 32px;
 }
 
-.cookie-domain {
-  font-size: 12px;
-  font-weight: 500;
-  color: #666;
+.key-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1d1d1f;
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  flex: 1;
 }
 
-.cookie-actions {
+/* Domain 单元：辅助信息 */
+.domain-unit {
+  margin-bottom: 20px;
+}
+
+.domain {
+  font-size: 13px;
+  font-weight: 400;
+  color: #4b5563;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 单元二：Value + 操作 */
+.value-unit {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
+  gap: 16px;
 }
 
-.locale-tag {
-  background: #007AFF;
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 6px;
-  box-shadow: none;
+.value-box {
+  flex: 1;
+  background: #f1f3f4;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1f2937;
+  line-height: 1.5;
+  max-height: 90px;
+  overflow-y: auto;
+  word-break: break-all;
+  min-width: 0;
 }
 
+.value-box::-webkit-scrollbar {
+  width: 4px;
+}
+
+.value-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.value-box::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+/* 复制按钮样式 */
 .copy-button {
   display: flex;
-  height: 28px;
-  width: 44px;
+  height: 32px;
+  min-width: 72px;
   align-items: center;
   justify-content: center;
-  border-radius: 14px;
-  font-size: 11px;
+  border-radius: 8px;
+  font-size: 12px;
   font-weight: 500;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(0, 0, 0, 0.12);
   cursor: pointer;
   transition: all 0.15s ease;
   color: #666;
-  background: #f8f9fa;
-  box-shadow: none;
+  background: #ffffff;
+  white-space: nowrap;
+  padding: 0 12px;
 }
 
 .copy-button:hover {
-  background: #E0E0DE;
-  border-color: #ccc;
+  background: #f5f5f5;
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #333;
 }
 
 .copy-button.copied {
@@ -352,43 +369,12 @@
   border-color: #c3e6cb;
 }
 
-/* Cookie 内容 - 上下布局 */
-.cookie-content {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.copy-button.key-copy {
+  flex-shrink: 0;
 }
 
-.cookie-field {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.field-label {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #999;
-}
-
-.field-value {
-  font-size: 13px;
-  color: #333;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.field-value.key {
-  font-weight: 500;
-  color: #000;
-}
-
-.field-value.value {
-  font-weight: 400;
-  color: #666;
+.copy-button.value-copy {
+  flex-shrink: 0;
 }
 
 /* 高亮搜索结果 - Apple风格 */
